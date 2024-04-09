@@ -5,6 +5,7 @@ import (
 	"os"
 
 	"github.com/gin-gonic/gin"
+	"github.com/pradytpk/go-ecommerce/database"
 	"github.com/pradytpk/go-ecommerce/routes"
 )
 
@@ -20,11 +21,14 @@ func main() {
 
 	router := gin.New()
 	router.Use(gin.Logger())
+
 	routes.UserRoutes(router)
 	router.Use(middleware.Authentication())
+
 	router.GET("/addtocart", app.AddToCart())
 	router.GET("/removeitem", app.RemoveItem())
 	router.GET("/cartcheckout", app.BuyFromCart())
 	router.GET("/instantbuy", app.InstantBuy())
+
 	log.Fatal(router.Run(":" + port))
 }
